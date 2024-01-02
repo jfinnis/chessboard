@@ -4,18 +4,20 @@ import { mapIndicesToNotation, mapIndicesToPositionIndex, mapNotationToSquareInf
 import '~/styles/modules/row.css'
 
 export type PieceNotation = 'WP' | 'WN' | 'WB' | 'WR' | 'WQ' | 'WK'
-                  | 'BP' | 'BN' | 'BB' | 'BR' | 'BQ' | 'BK'
+                          | 'BP' | 'BN' | 'BB' | 'BR' | 'BQ' | 'BK'
 
 type ChessboardProps = {
     rows?: number,
     columns?: number
     position?: (PieceNotation | undefined)[]
+    hideNotation?: boolean
 }
 
 export default function Chessboard({
     rows = 8,
     columns = 8,
-    position = Array(64).fill(undefined)
+    position = Array(64).fill(undefined),
+    hideNotation = false
 }: ChessboardProps): JSX.Element {
     console.log('-R- Chessboard with position',position)
     return <span className="m-board">
@@ -28,6 +30,7 @@ export default function Chessboard({
                     return <Square key={notation}
                         squareInfo={squareInfo}
                         piece={position[positionIndex]}
+                        hideNotation={hideNotation}
                     />
                 })}
             </div>
