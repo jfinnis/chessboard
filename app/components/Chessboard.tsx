@@ -1,5 +1,6 @@
 import Square from '~/components/Square'
-import { mapIndicesToNotation, mapIndicesToPositionIndex, mapNotationToSquareInfo } from '~/utils/notation'
+import { mapIndicesToNotation, mapNotationToSquareInfo } from '~/utils/notation'
+import { type PositionArray, mapIndicesToPositionIndex } from '~/utils/positions'
 
 import '~/styles/modules/row.css'
 
@@ -9,7 +10,7 @@ export type PieceNotation = 'WP' | 'WN' | 'WB' | 'WR' | 'WQ' | 'WK'
 type ChessboardProps = {
     rows?: number,
     columns?: number
-    position?: (PieceNotation | undefined)[]
+    position?: PositionArray
     hideNotation?: boolean
 }
 
@@ -19,7 +20,6 @@ export default function Chessboard({
     position = Array(64).fill(undefined),
     hideNotation = false
 }: ChessboardProps): JSX.Element {
-    console.log('-R- Chessboard with position',position)
     return <span className="m-board">
         {[...Array(rows)].map((_, rowIndex) => {
             return <div key={`row-${rowIndex}`} className="m-row">

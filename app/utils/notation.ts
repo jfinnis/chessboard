@@ -113,12 +113,3 @@ export function mapNotationToSquareInfo(notation: string): SquareInfo {
     invariant(squareInfo, `Notation '${notation}' is invalid.`)
     return squareInfo as SquareInfo
 }
-
-/**
- * Take row/column indices and turn it into a number from 0 - 63.
- */
-export function mapIndicesToPositionIndex(row: number, column: number): number {
-    invariant(row >= 0 && row < 8, `Row index '${row}' must be between 0 and 7.`)
-    invariant(column >=0 && column < 8, `Column index '${column}' must be between 0 and 7.`)
-    return (row * 8) + column
-}

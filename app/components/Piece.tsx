@@ -33,7 +33,7 @@ export default function({piece}: PieceProps) {
         case 'BB':
             image = <img src={BlackBishop} alt="Black Bishop" />
             break
-        case 'BK':
+        case 'BN':
             image = <img src={BlackKnight} alt="Black Knight" />
             break
         case 'BP':
@@ -51,7 +51,7 @@ export default function({piece}: PieceProps) {
         case 'WB':
             image = <img src={WhiteBishop} alt="White Bishop" />
             break
-        case 'WK':
+        case 'WN':
             image = <img src={WhiteKnight} alt="White Knight" />
             break
         case 'WP':
