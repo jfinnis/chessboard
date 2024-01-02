@@ -1,16 +1,20 @@
 {
-  "name": "",
+  "name": "chess-notes",
   "private": true,
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "dev": "bunx --bun remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "bun run unit-test",
+    "unit-test": "bun test",
+    "watch": "bun test --watch"
   },
   "dependencies": {
+    "@epic-web/invariant": "^1.0.0",
     "@remix-run/node": "^2.4.1",
     "@remix-run/react": "^2.4.1",
     "@remix-run/serve": "^2.4.1",
@@ -19,10 +23,13 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^12.10.3",
     "@remix-run/dev": "^2.4.1",
+    "@testing-library/react": "^14.1.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "bun-types": "^1.0.20",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",

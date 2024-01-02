@@ -1,23 +1,27 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "target": "ES2022",
-    "strict": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
-    },
+    "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
+    "compilerOptions": {
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+        "module": "ESNext",
+        "target": "ES2022",
+        "noEmit": true,
+        "noImplicitAny": true,
+        "types": [
+            "bun-types",
+            "web"
+        ],
 
-    // Remix takes care of building everything in `remix build`.
-    "noEmit": true
-  }
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "moduleResolution": "Bundler",
+        "resolveJsonModule": true,
+        "strict": true,
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["./app/*"]
+        }
+    }
 }

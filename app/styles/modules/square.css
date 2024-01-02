@@ -1,0 +1,26 @@
+.m-square {
+    position: relative;
+    aspect-ratio: 1/1;
+    background: var(--color-bglight);
+    width: 5rem;
+    padding: 0.5rem;
+
+    /* temp */
+    display: flex;
+    flex-direction: column;
+}
+
+.m-square--dark {
+    background: var(--color-bgdark);
+}
+
+.m-square__x-notation {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.m-square__y-notation {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
