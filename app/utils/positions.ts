@@ -24,18 +24,16 @@ const position: PositionArray = [
     'BR', undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 ]
 
-export function initialPosition(): PositionArray {
-    return [
-        'BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR',
-        'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP',
-        undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-        undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-        undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-        undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-        'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP',
-        'WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR',
-    ]
-}
+export const initialPosition: PositionArray = [
+    'BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR',
+    'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP',
+    undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+    undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+    undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+    undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+    'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP',
+    'WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR',
+]
 
 const allPieces: PieceNotation[] = [
     'BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR',
@@ -71,7 +69,6 @@ export function randomPosition(): PositionArray {
             }
         }
     }
-    console.log('RNDOM',positions)
     return positions
 }
 

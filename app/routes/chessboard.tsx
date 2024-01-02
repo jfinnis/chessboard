@@ -3,7 +3,7 @@ import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 
 import Chessboard, { type PieceNotation } from '~/components/Chessboard'
-import { type PositionArray, randomPosition } from '~/utils/positions'
+import { type PositionArray, randomPosition, initialPosition } from '~/utils/positions'
 
 export const meta: MetaFunction = () => {
     return [
@@ -28,10 +28,23 @@ export default function Index() {
                     onChange={() => setHideNotation(!hideNotation) }
                 />
             </label>
+
+            <button type="button"
+                onClick={() => setPosition(initialPosition)}
+            >
+                Initial Position
+            </button>
+
             <button type="button"
                 onClick={() => setPosition(randomPosition())}
             >
                 Randomize
+            </button>
+
+            <button type="button"
+                onClick={() => setPosition(undefined)}
+            >
+                Clear
             </button>
         </div>
 
