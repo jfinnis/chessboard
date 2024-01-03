@@ -18,49 +18,23 @@ type PieceProps = {
     piece: PieceNotation
 }
 
+const pieceImages: Record<PieceNotation, JSX.Element> = {
+    BK: <img src={BlackKing} alt="Black King" />,
+    BQ: <img src={BlackQueen} alt="Black Queen" />,
+    BR: <img src={BlackRook} alt="Black Rook" />,
+    BB: <img src={BlackBishop} alt="Black Bishop" />,
+    BN: <img src={BlackKnight} alt="Black Knight" />,
+    BP: <img src={BlackPawn} alt="Black Pawn" />,
+    WK: <img src={WhiteKing} alt="White King" />,
+    WQ: <img src={WhiteQueen} alt="White Queen" />,
+    WR: <img src={WhiteRook} alt="White Rook" />,
+    WB: <img src={WhiteBishop} alt="White Bishop" />,
+    WN: <img src={WhiteKnight} alt="White Knight" />,
+    WP: <img src={WhitePawn} alt="White Pawn" />
+}
+
 export default function({piece}: PieceProps) {
-    let image: JSX.Element
-    switch (piece) {
-        case 'BK':
-            image = <img src={BlackKing} alt="Black King" />
-            break
-        case 'BQ':
-            image = <img src={BlackQueen} alt="Black Queen" />
-            break
-        case 'BR':
-            image = <img src={BlackRook} alt="Black Rook" />
-            break
-        case 'BB':
-            image = <img src={BlackBishop} alt="Black Bishop" />
-            break
-        case 'BN':
-            image = <img src={BlackKnight} alt="Black Knight" />
-            break
-        case 'BP':
-            image = <img src={BlackPawn} alt="Black Pawn" />
-            break
-        case 'WK':
-            image = <img src={WhiteKing} alt="White King" />
-            break
-        case 'WQ':
-            image = <img src={WhiteQueen} alt="White Queen" />
-            break
-        case 'WR':
-            image = <img src={WhiteRook} alt="White Rook" />
-            break
-        case 'WB':
-            image = <img src={WhiteBishop} alt="White Bishop" />
-            break
-        case 'WN':
-            image = <img src={WhiteKnight} alt="White Knight" />
-            break
-        case 'WP':
-            image = <img src={WhitePawn} alt="White Pawn" />
-            break
-        default:
-            throw new Error('Invalid Piece to display')
-    }
     return <span className="m-piece">
-        {image}
+        {pieceImages[piece]}
     </span>
 }

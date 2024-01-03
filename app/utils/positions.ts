@@ -104,7 +104,6 @@ export function moveRandomPiece(oldPosition: PositionArray| undefined): Position
  */
 export function movePiece(oldPosition: PositionArray, oldSquare: Notation = 'e6', newSquare: Notation = 'e7'): PositionArray {
     invariant(oldPosition, 'Position array must exist.')
-    console.log('move called with array',oldPosition)
 
     const oldSquareInfo = mapNotationToSquareInfo(oldSquare)
     const oldSquarePositionIndex = mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)
