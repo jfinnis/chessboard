@@ -8,22 +8,18 @@ export type PieceNotation = 'WP' | 'WN' | 'WB' | 'WR' | 'WQ' | 'WK'
                           | 'BP' | 'BN' | 'BB' | 'BR' | 'BQ' | 'BK'
 
 type ChessboardProps = {
-    rows?: number,
-    columns?: number
     position?: PositionArray
     hideNotation?: boolean
 }
 
 export default function Chessboard({
-    rows = 8,
-    columns = 8,
     position = Array(64).fill(undefined),
     hideNotation = false
 }: ChessboardProps): JSX.Element {
     return <span className="m-board">
-        {[...Array(rows)].map((_, rowIndex) => {
+        {[...Array(8)].map((_, rowIndex) => {
             return <div key={`row-${rowIndex}`} className="m-row">
-                {[...Array(columns)].map((_, colIndex) => {
+                {[...Array(8)].map((_, colIndex) => {
                     const notation = mapIndicesToNotation(rowIndex, colIndex)
                     const squareInfo = mapNotationToSquareInfo(notation)
                     const positionIndex = mapIndicesToPositionIndex(rowIndex, colIndex)
