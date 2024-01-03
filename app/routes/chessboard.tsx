@@ -2,8 +2,8 @@ import { useState } from 'react'
 import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 
-import Chessboard, { type PieceNotation } from '~/components/Chessboard'
-import { type PositionArray, randomPosition, initialPosition } from '~/utils/positions'
+import Chessboard from '~/components/Chessboard'
+import { type PositionArray, randomPosition, initialPosition, moveRandomPiece } from '~/utils/positions'
 
 export const meta: MetaFunction = () => {
     return [
@@ -29,22 +29,26 @@ export default function Index() {
                 />
             </label>
 
-            <button type="button"
-                onClick={() => setPosition(initialPosition)}
-            >
+            <button type="button" onClick={() => setPosition(initialPosition)} >
                 Initial Position
             </button>
 
             <button type="button"
-                onClick={() => setPosition(randomPosition())}
+                onClick={() => setPosition(undefined)}
+                disabled={!position}
             >
+                Clear
+            </button>
+
+            <button type="button" onClick={() => setPosition(randomPosition())} >
                 Randomize
             </button>
 
             <button type="button"
-                onClick={() => setPosition(undefined)}
+                onClick={() => setPosition(moveRandomPiece(position))}
+                disabled={!position}
             >
-                Clear
+                Yolo Move
             </button>
         </div>
 

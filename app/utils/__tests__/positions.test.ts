@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
-import { mapIndicesToPositionIndex } from '~/utils/positions'
+import { mapNotationToSquareInfo, type Notation } from '~/utils/notation'
+import { initialPosition, mapIndicesToPositionIndex, movePiece, type PositionArray } from '~/utils/positions'
 import { errorMessageExpectation, falseExpectation } from '~/utils/test'
 
 describe('mapIndicesToPositionIndex()', function() {
@@ -30,5 +31,82 @@ describe('mapIndicesToPositionIndex()', function() {
         expect(mapIndicesToPositionIndex(7, 7)).toEqual(63)
         expect(mapIndicesToPositionIndex(2, 2)).toEqual(18)
         expect(mapIndicesToPositionIndex(6, 5)).toEqual(53)
+    })
+})
+
+describe('movePiece()', function() {
+    test('throws error if no position exists', function() {
+        try {
+            ///@ts-ignore-error
+            movePiece(undefined, 'e2', 'e4')
+            falseExpectation()
+        } catch (e) {
+            errorMessageExpectation(e, 'Position array must exist.')
+        }
+    })
+
+    test('throws error if moving from a bad square', function() {
+        try {
+            // Make the position array smaller just to test this.
+            movePiece(initialPosition.slice(0, 15), 'e2', 'e7')
+            falseExpectation()
+        } catch (e) {
+            errorMessageExpectation(e, "Cannot move from a square 'e2' that does not exist.")
+        }
+    })
+
+    test('throws error if moving to a bad square', function() {
+        try {
+            // Make the position array smaller just to test this.
+            movePiece(initialPosition.slice(0, 15), 'e7', 'e2')
+            falseExpectation()
+        } catch (e) {
+            errorMessageExpectation(e, "Cannot move to a square 'e2' that does not exist.")
+        }
+    })
+
+    test('throws error if trying to move a piece from a square without a piece', function() {
+        try {
+            movePiece(initialPosition, 'e3', 'e4')
+            falseExpectation()
+        } catch (e) {
+            errorMessageExpectation(e, `There is no piece on square 'e3' to move.`)
+        }
+    })
+
+    test('moves a piece to a square without a piece', function() {
+        const oldSquare: Notation = 'e2'
+        const oldSquareInfo = mapNotationToSquareInfo(oldSquare)
+        const newSquare: Notation = 'e4'
+        const newSquareInfo = mapNotationToSquareInfo(newSquare)
+
+        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toEqual('WP')
+        expect(initialPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toBeUndefined()
+
+        const newPosition = movePiece(initialPosition, oldSquare, newSquare)
+        expect(newPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toBeUndefined()
+        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('WP')
+
+        // No pieces were captured so total number should stay the same.
+        const numPieces = (position: PositionArray) => position.filter(p => p !== undefined).length
+        expect(numPieces(initialPosition)).toEqual(numPieces(newPosition))
+    })
+
+    test('moves a piece to a square with a piece', function() {
+        const oldSquare: Notation = 'e2'
+        const oldSquareInfo = mapNotationToSquareInfo(oldSquare)
+        const newSquare: Notation = 'h8'
+        const newSquareInfo = mapNotationToSquareInfo(newSquare)
+
+        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toEqual('WP')
+        expect(initialPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('BR')
+
+        const newPosition = movePiece(initialPosition, oldSquare, newSquare)
+        expect(newPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toBeUndefined()
+        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('WP')
+
+        // One piece was captured, so initial position should have one extra.
+        const numPieces = (position: PositionArray) => position.filter(p => p !== undefined).length
+        expect(numPieces(initialPosition)).toEqual(numPieces(newPosition) + 1)
     })
 })
