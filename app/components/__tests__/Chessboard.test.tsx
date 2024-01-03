@@ -1,10 +1,15 @@
 /// <reference lib="dom" />
-import { describe, expect, test } from 'bun:test'
-import { render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, test } from 'bun:test'
+import { cleanup, render, screen } from '@testing-library/react'
 
 import Chessboard from '~/components/Chessboard'
+import { initialPosition } from '~/utils/positions'
 
 describe('Chessboard component', function() {
+    afterEach(function() {
+        cleanup()
+    })
+
     test('renders squares in the correct colors', function() {
         render(<Chessboard />)
         // Light squares
@@ -19,7 +24,18 @@ describe('Chessboard component', function() {
         })
     })
 
-    test.todo('renders pieces in the squares indicated by `position`', function() {
+    test('renders pieces in the squares indicated by `position`', function() {
+        render(<Chessboard position={initialPosition} />)
 
+        // Check that both kings are on the right squares in the initial position.
+        const blackKingSquare = screen.getByAltText('Black King').closest('.m-square')
+        expect(blackKingSquare).toBeInstanceOf(HTMLElement)
+        if (blackKingSquare instanceof HTMLElement)
+            expect(blackKingSquare.dataset.notation).toEqual('e8')
+
+        const whiteKingSquare = screen.getByAltText('White King').closest('.m-square')
+        expect(whiteKingSquare).toBeInstanceOf(HTMLElement)
+        if (whiteKingSquare instanceof HTMLElement)
+            expect(whiteKingSquare.dataset.notation).toEqual('e1')
     })
 })
