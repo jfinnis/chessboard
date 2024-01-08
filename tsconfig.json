@@ -1,27 +1,54 @@
 {
     "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
     "compilerOptions": {
-        "lib": ["DOM", "DOM.Iterable", "ES2022"],
-        "module": "ESNext",
-        "target": "ES2022",
-        "noEmit": true,
-        "noImplicitAny": true,
+        "jsx": "react-jsx",
+        "paths": {
+            "~/*": ["./app/*"]
+        },
         "types": [
             "bun-types",
             "web"
         ],
 
-        "isolatedModules": true,
+        /* Base options */
         "esModuleInterop": true,
-        "jsx": "react-jsx",
-        "moduleResolution": "Bundler",
-        "resolveJsonModule": true,
-        "strict": true,
-        "allowJs": true,
         "forceConsistentCasingInFileNames": true,
-        "baseUrl": ".",
-        "paths": {
-            "~/*": ["./app/*"]
-        }
+        "skipLibCheck": true,
+        "target": "ES2022",
+        "verbatimModuleSyntax": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "moduleDetection": "force",
+
+        /* Strictness */
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+
+        /* If transpiling with Typescript */
+        // "moduleResolution": "NodeNext",
+        // "module": "NodeNext",
+
+        /* If NOT transpiling with Typescript */
+        "moduleResolution": "Bundler",
+        "module": "ESNext",
+        "noEmit": true,
+
+        /* If your code runs in the DOM */
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+
+        /* If your code doesn't run in the DOM */
+        // "lib": "ES2022"],
+
+        /**
+         * For projects where both apply, i.e., frontend and backend code, you can have a base config
+         * and two local tsconfigs
+         */
+
+        /* If publishing a package for npm */
+        // "declaration": true,
+
+        /* If publishing a package for a monorepo */
+        // "declarationMap": true,
+        // "sourceMap": true,
     }
 }
