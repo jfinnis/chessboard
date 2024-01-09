@@ -2,3 +2,115 @@
     --color-bglight: antiquewhite;
     --color-bgdark: tomato;
 }
+
+/**
+ * Global Element Styles
+ */
+html, body {
+  height: 100%;
+  background-color: var(--_color-bg);
+  color: var(--text-color-dark);
+  font-family: 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif';
+
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: unset;
+  color: currentColor;
+  cursor: pointer;
+  outline-offset: 4px;
+
+  /* border-radius: 50% results in an oval, default to large number for "pill" shape */
+  border-radius: var(--border-radius-large, 100vmax);
+  /* hide overlay shown when tapping on mobile, we give enough feedback */
+  -webkit-tap-highlight-color: transparent;
+  /* don't allow mobile long press to copy button text */
+  user-select: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  /* future spec: evenly distribute wrapped text on available lines */
+  text-wrap: balance;
+}
+
+a:where(:any-link) {
+  color: var(--color);
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-normal);
+  border: none;
+  padding: 0;
+}
+
+input {
+  padding: var(--spacing-small);
+  border: var(--border-light);
+  border-radius: var(--border-radius-xsmall);
+}
+
+:is(input, textarea):focus-visible {
+  outline: var(--color-active) auto 1px;
+}
+
+input[type=number]{
+  max-width: calc(var(--spacing-normal) * 5);
+
+  /* firefox: hide number arrow buttons */
+  -moz-appearance: textfield;
+}
+/* chrome, safari, edge, opera: hide number arrow buttons */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=checkbox] {
+  width: var(--spacing-normal);
+  height: var(--spacing-normal);
+  margin: 0 var(--spacing-xsmall) 0 0;
+  cursor: pointer;
+}
+/* align label of checkbox with checkbox */
+label:has(> input[type=checkbox]) > * {
+  vertical-align: middle
+}
+
+input[type=radio] {
+  width: var(--font-size-large);
+  height: var(--font-size-large);
+  padding: 0;
+  border: 2px solid var(--color-active-light);
+  border-radius: 50%;
+  appearance: none;
+  cursor: pointer;
+}
+
+input[type=radio]:checked {
+  background-color: var(--color-active-light);
+}
+
+textarea {
+  width: 100%;
+  padding: var(--spacing-normal);
+  border: var(--border-light);
+  border-radius: var(--border-radius-xsmall);
+  resize: none;
+}
+
