@@ -1,22 +1,30 @@
-import { type PieceNotation } from '~/components/Chessboard'
+import { useDroppable } from '@dnd-kit/core'
+
 import Piece from '~/components/Piece'
-import { type SquareInfo } from '~/utils/notation'
+import type { PieceObj, SquareInfo } from '~/utils/ts-helpers'
 
 import '~/styles/modules/square.css'
 
 // TODO: work in matt pocock infer generic type string literals so that notation is typed as row-column?
 type SquareProps = {
     squareInfo: SquareInfo
-    piece: PieceNotation | undefined
+    piece: PieceObj | undefined
     hideNotation: boolean
 }
 
 export default function({ squareInfo, piece, hideNotation }: SquareProps) {
+    // const { isOver, setNodeRef } = useDroppable({ id: squareInfo.notation })
+    const { setNodeRef } = useDroppable({ id: squareInfo.notation })
+
+    // const outlineStyle = { outline: isOver ? '2px solid darkgreen' : undefined }
     const colorCss = squareInfo.color === 'white' ? 'm-square--light' : 'm-square--dark'
-    return <span className={`m-square ${colorCss}`}
+
+    return <span
+        id={squareInfo.notation}
+        className={`m-square ${colorCss}`}
         data-notation={squareInfo.notation}
-        draggable={true}
-    >{/* draggable goes on item not square */}
+        ref={setNodeRef}
+    >
         {!hideNotation && squareInfo.rowIndex === 7 &&
             <span className="m-square__x-notation">{squareInfo.notation.charAt(0)}</span>
         }

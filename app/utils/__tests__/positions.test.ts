@@ -1,25 +1,27 @@
 import { describe, expect, test } from 'bun:test'
 
 import { mapNotationToSquareInfo, type Notation } from '~/utils/notation'
-import { initialPosition, mapIndicesToPositionIndex, movePiece, type PositionArray } from '~/utils/positions'
+import { initialPosition, mapIndicesToPositionIndex, mapPositionIndexToIndices, moveNotation, movePiece, type PositionArray } from '~/utils/positions'
 import { errorMessageExpectation, falseExpectation } from '~/utils/test'
 
 describe('mapIndicesToPositionIndex()', function() {
     test('throws an error for invalid row or column parameters', function() {
         ;[-1, 8, 144].forEach((rowIndex: number) => {
             try {
+                //@ts-ignore-error
                 mapIndicesToPositionIndex(rowIndex, 3)
                 falseExpectation()
             } catch (e) {
-                errorMessageExpectation(e, `Row index '${rowIndex}' must be between 0 and 7.`)
+                errorMessageExpectation(e, `Row index "${rowIndex}" must be between 0 and 7.`)
             }
         })
         ;[-1, 8, 144].forEach((colIndex: number) => {
             try {
+                //@ts-ignore-error
                 mapIndicesToPositionIndex(3, colIndex)
                 falseExpectation()
             } catch (e) {
-                errorMessageExpectation(e, `Column index '${colIndex}' must be between 0 and 7.`)
+                errorMessageExpectation(e, `Column index "${colIndex}" must be between 0 and 7.`)
             }
         })
     })
@@ -33,6 +35,26 @@ describe('mapIndicesToPositionIndex()', function() {
         expect(mapIndicesToPositionIndex(6, 5)).toEqual(53)
     })
 })
+
+describe('mapPositionIndexToIndices()', function() {
+    test('throws an error for invalid row or column parameters', function() {
+        ;[-1, 64].forEach(index => {
+            try {
+                mapPositionIndexToIndices(index)
+                falseExpectation()
+            } catch (e) {
+                errorMessageExpectation(e, `Position index "${index}" must be between 0 and 63.`)
+            }
+        })
+    })
+
+    test('returns the correct indices to match the position array', function() {
+        expect(mapPositionIndexToIndices(0)).toEqual({ row: 0, column: 0 })
+        expect(mapPositionIndexToIndices(33)).toEqual({ row: 4, column: 1 })
+        expect(mapPositionIndexToIndices(63)).toEqual({ row: 7, column: 7 })
+    })
+})
+
 
 describe('movePiece()', function() {
     test('throws error if no position exists', function() {
@@ -80,12 +102,14 @@ describe('movePiece()', function() {
         const newSquare: Notation = 'e4'
         const newSquareInfo = mapNotationToSquareInfo(newSquare)
 
-        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toEqual('WP')
+        // e2 currently contains a White Pawn, e4 contains nothing
+        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toMatchObject({ piece: 'WP' })
         expect(initialPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toBeUndefined()
 
+        // New position has nothing at e2, a White Pawn at e4
         const newPosition = movePiece(initialPosition, oldSquare, newSquare)
         expect(newPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toBeUndefined()
-        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('WP')
+        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toMatchObject({ piece: 'WP' })
 
         // No pieces were captured so total number should stay the same.
         const numPieces = (position: PositionArray) => position.filter(p => p !== undefined).length
@@ -98,12 +122,14 @@ describe('movePiece()', function() {
         const newSquare: Notation = 'h8'
         const newSquareInfo = mapNotationToSquareInfo(newSquare)
 
-        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toEqual('WP')
-        expect(initialPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('BR')
+        // e2 currently contains a White Pawn, h8 contains a Black Rook
+        expect(initialPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toMatchObject({ piece: 'WP' })
+        expect(initialPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toMatchObject({ piece: 'BR' })
 
+        // New position has nothing at e2, a White Pawn at e4
         const newPosition = movePiece(initialPosition, oldSquare, newSquare)
         expect(newPosition[mapIndicesToPositionIndex(oldSquareInfo.rowIndex, oldSquareInfo.colIndex)]).toBeUndefined()
-        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toEqual('WP')
+        expect(newPosition[mapIndicesToPositionIndex(newSquareInfo.rowIndex, newSquareInfo.colIndex)]).toMatchObject({ piece: 'WP' })
 
         // One piece was captured, so initial position should have one extra.
         const numPieces = (position: PositionArray) => position.filter(p => p !== undefined).length

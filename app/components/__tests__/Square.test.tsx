@@ -4,6 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 
 import Square from '~/components/Square'
 import { mapNotationToSquareInfo } from '~/utils/notation'
+import type { BoardIndex, Notation, PieceNotation } from '~/utils/ts-helpers'
 
 describe('Square component', function() {
     afterEach(function() {
@@ -83,10 +84,16 @@ describe('Square component', function() {
 
     describe('pieces', function() {
         test('renders piece in square if provided', function() {
+            const piece = {
+                id: crypto.randomUUID(),
+                piece: 'BK' as PieceNotation,
+                square: 'c3' as Notation,
+                squarePos: { row: 5 as BoardIndex, column: 2 as BoardIndex }
+            }
             render(
                 <Square
                     squareInfo={mapNotationToSquareInfo('c3')}
-                    piece={'BK'}
+                    piece={piece}
                     hideNotation={false}
                 />
             )

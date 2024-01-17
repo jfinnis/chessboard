@@ -1,7 +1,5 @@
 .m-piece {
     height: 100%;
-
-    & img {
-        height: 100%;
-    }
+    z-index: 1;
+    cursor: pointer;
 }

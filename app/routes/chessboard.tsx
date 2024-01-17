@@ -3,7 +3,8 @@ import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 
 import Chessboard from '~/components/Chessboard'
-import { type PositionArray, randomPosition, initialPosition, moveRandomPiece } from '~/utils/positions'
+import { randomPosition, initialPosition, moveRandomPiece } from '~/utils/positions'
+import type { PositionArray } from '~/utils/ts-helpers'
 
 export const meta: MetaFunction = () => {
     return [
