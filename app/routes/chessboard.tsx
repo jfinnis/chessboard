@@ -14,7 +14,7 @@ export const meta: MetaFunction = () => {
 }
 
 export default function ChessboardRoute() {
-    const [hideNotation, setHideNotation] = useState(false)
+    const [showNotation, setShowNotation] = useState(true)
     const [position, setPosition] = useState<PositionArray>()
     return <>
         <Link to="/">Back</Link>
@@ -25,8 +25,8 @@ export default function ChessboardRoute() {
                 Hide Notation
                 <input id="cbHideNotation"
                     type="checkbox"
-                    defaultValue={hideNotation ? 1 : 0}
-                    onChange={() => setHideNotation(!hideNotation) }
+                    defaultValue={showNotation ? 0 : 1}
+                    onChange={() => setShowNotation(!showNotation) }
                 />
             </label>
 
@@ -58,6 +58,7 @@ export default function ChessboardRoute() {
                 position={position}
                 hideNotation={hideNotation}
             />
+                    showNotation={showNotation}
         </div>
     </>
 }

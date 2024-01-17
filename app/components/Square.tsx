@@ -9,10 +9,10 @@ import '~/styles/modules/square.css'
 type SquareProps = {
     squareInfo: SquareInfo
     piece: Piece | undefined
-    hideNotation: boolean
+    showNotation: boolean
 }
 
-export default function SquareComponent({ squareInfo, piece, hideNotation }: SquareProps) {
+export default function SquareComponent({ squareInfo, piece, showNotation }: SquareProps) {
     // const { isOver, setNodeRef } = useDroppable({ id: squareInfo.notation })
     const { setNodeRef } = useDroppable({ id: squareInfo.notation })
 
@@ -25,10 +25,10 @@ export default function SquareComponent({ squareInfo, piece, hideNotation }: Squ
         data-notation={squareInfo.notation}
         ref={setNodeRef}
     >
-        {!hideNotation && squareInfo.rowIndex === 7 &&
+        {showNotation && squareInfo.rowIndex === 7 &&
             <span className="m-square__x-notation">{squareInfo.notation.charAt(0)}</span>
         }
-        {!hideNotation && squareInfo.colIndex === 0 &&
+        {showNotation && squareInfo.colIndex === 0 &&
             <span className="m-square__y-notation">{squareInfo.notation.charAt(1)}</span>
         }
         {piece && <PieceComponent piece={piece} />}

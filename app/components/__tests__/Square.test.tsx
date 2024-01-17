@@ -16,7 +16,7 @@ describe('Square component', function() {
             <Square
                 squareInfo={{ rowIndex: 0, colIndex: 0, color: 'white', notation: 'a8' }}
                 piece={undefined}
-                hideNotation={false}
+                showNotation={true}
             />
         )
     })
@@ -27,7 +27,7 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('a1')}
                     piece={undefined}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(screen.queryAllByText('a').length).toEqual(1)
@@ -39,7 +39,7 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('a3')}
                     piece={undefined}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(screen.queryAllByText('a').length).toEqual(0)
@@ -50,7 +50,7 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('a3')}
                     piece={undefined}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(screen.queryAllByText('3').length).toEqual(1)
@@ -62,18 +62,18 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('c3')}
                     piece={undefined}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(screen.queryAllByText('3').length).toEqual(0)
         })
 
-        test('hides notation if hideNotation is set to true', function() {
+        test('hides notation if showNotation is set to false', function() {
             render(
                 <Square
                     squareInfo={mapNotationToSquareInfo('a1')}
                     piece={undefined}
-                    hideNotation={true}
+                    showNotation={false}
                 />
             )
             expect(screen.queryAllByText('a').length).toEqual(0)
@@ -94,7 +94,7 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('c3')}
                     piece={piece}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(document.querySelector('img')).not.toBeNull()
@@ -106,7 +106,7 @@ describe('Square component', function() {
                 <Square
                     squareInfo={mapNotationToSquareInfo('c3')}
                     piece={undefined}
-                    hideNotation={false}
+                    showNotation={true}
                 />
             )
             expect(document.querySelector('img')).toBeNull()

@@ -24,14 +24,14 @@ export function dropPieceOnSquare(event: DragEndEvent, position: PositionArray):
 
 type ChessboardProps = {
     position?: PositionArray
-    hideNotation?: boolean
     setPosition?: Function
+    showNotation?: boolean
 }
 
 export default function ChessboardComponent({
     position = Array(64).fill(undefined),
     setPosition,
-    hideNotation = false,
+    showNotation = true,
 }: ChessboardProps): JSX.Element {
     const boardIndices: BoardIndex[] = [0, 1, 2, 3, 4, 5, 6, 7]
     return <DndContext
@@ -49,7 +49,7 @@ export default function ChessboardComponent({
                         return <Square key={notation}
                             squareInfo={squareInfo}
                             piece={position[positionIndex]}
-                            hideNotation={hideNotation}
+                            showNotation={showNotation}
                         />
                     })}
                 </div>
