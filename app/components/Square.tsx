@@ -1,18 +1,18 @@
 import { useDroppable } from '@dnd-kit/core'
 
-import Piece from '~/components/Piece'
-import type { PieceObj, SquareInfo } from '~/utils/ts-helpers'
+import PieceComponent from '~/components/Piece'
+import type { Piece, SquareInfo } from '~/utils/ts-helpers'
 
 import '~/styles/modules/square.css'
 
 // TODO: work in matt pocock infer generic type string literals so that notation is typed as row-column?
 type SquareProps = {
     squareInfo: SquareInfo
-    piece: PieceObj | undefined
+    piece: Piece | undefined
     hideNotation: boolean
 }
 
-export default function({ squareInfo, piece, hideNotation }: SquareProps) {
+export default function SquareComponent({ squareInfo, piece, hideNotation }: SquareProps) {
     // const { isOver, setNodeRef } = useDroppable({ id: squareInfo.notation })
     const { setNodeRef } = useDroppable({ id: squareInfo.notation })
 
@@ -31,6 +31,6 @@ export default function({ squareInfo, piece, hideNotation }: SquareProps) {
         {!hideNotation && squareInfo.colIndex === 0 &&
             <span className="m-square__y-notation">{squareInfo.notation.charAt(1)}</span>
         }
-        {piece && <Piece piece={piece} />}
+        {piece && <PieceComponent piece={piece} />}
     </span>
 }

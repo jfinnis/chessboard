@@ -28,7 +28,7 @@ type ChessboardProps = {
     setPosition?: Function
 }
 
-export default function Chessboard({
+export default function ChessboardComponent({
     position = Array(64).fill(undefined),
     setPosition,
     hideNotation = false,

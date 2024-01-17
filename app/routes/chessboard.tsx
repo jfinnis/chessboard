@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
     ]
 }
 
-export default function Index() {
+export default function ChessboardRoute() {
     const [hideNotation, setHideNotation] = useState(false)
     const [position, setPosition] = useState<PositionArray>()
     return <>

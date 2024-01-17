@@ -7,9 +7,9 @@ export type Notation = 'a8' | 'b8' | 'c8' | 'd8' | 'e8' | 'f8' | 'g8' | 'h8' | '
 export type PieceNotation = 'WP' | 'WN' | 'WB' | 'WR' | 'WQ' | 'WK'
                           | 'BP' | 'BN' | 'BB' | 'BR' | 'BQ' | 'BK'
 
-export type PositionArray = (PieceObj | undefined)[]
+export type PositionArray = (Piece | undefined)[]
 
-export type PieceObj = {
+export type Piece = {
     id: string
     piece: PieceNotation
     square: Notation

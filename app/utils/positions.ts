@@ -1,7 +1,7 @@
 import { invariant } from '@epic-web/invariant'
 
 import { mapIndicesToNotation, mapNotationToSquareInfo } from '~/utils/notation'
-import type { BoardIndex, Notation, PieceNotation, PieceObj, PositionArray } from '~/utils/ts-helpers'
+import type { BoardIndex, Notation, PieceNotation, Piece, PositionArray } from '~/utils/ts-helpers'
 
 /**
  * Turn row/column indices into a number from 0 - 63.
@@ -41,7 +41,7 @@ export const initialPosition: PositionArray = tempInitialPosition.map(
             piece,
             squarePos: squareIndices,
             square: mapIndicesToNotation(squareIndices.row, squareIndices.column ),
-        } as PieceObj : undefined
+        } as Piece : undefined
     }
 )
 
@@ -77,7 +77,7 @@ export function randomPosition(): PositionArray {
             if (!positions[i]) {
                 const squareIndices = mapPositionIndexToIndices(i)
                 const notation = mapIndicesToNotation(squareIndices.row, squareIndices.column)
-                const piece: PieceObj = {
+                const piece: Piece = {
                     id: crypto.randomUUID(),
                     piece: pieceNotation,
                     square: notation,

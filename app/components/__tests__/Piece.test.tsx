@@ -1,13 +1,26 @@
 /// <reference lib="dom" />
-import { describe, test } from 'bun:test'
-import { render } from '@testing-library/react'
+import { afterEach, describe, expect, test } from 'bun:test'
+import { cleanup, render, screen } from '@testing-library/react'
 
-import Piece from '~/components/Piece'
+import PieceComponent from '~/components/Piece'
+import type { Piece } from '~/utils/ts-helpers'
 
 describe('Piece component', function() {
+    afterEach(function() {
+        cleanup()
+    })
+
     test('renders without errors', function() {
+        const piece: Piece = {
+            id: crypto.randomUUID(),
+            piece: 'WK',
+            square: 'a8',
+            squarePos: { row: 0, column: 0 }
+        }
         render(
-            <Piece piece='WK' />
+            <PieceComponent piece={piece} />
         )
+        const pieceEl = screen.getByAltText('White King')
+        expect(pieceEl).toBeInstanceOf(HTMLImageElement)
     })
 })

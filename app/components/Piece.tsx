@@ -1,7 +1,7 @@
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 
-import type { PieceNotation, PieceObj } from '~/utils/ts-helpers'
+import type { PieceNotation, Piece } from '~/utils/ts-helpers'
 
 import BlackKing from '~/images/bk.svg'
 import BlackQueen from '~/images/bq.svg'
@@ -33,10 +33,10 @@ const pieceImageProps: Record<PieceNotation, {}> = {
 }
 
 type PieceProps = {
-    piece: PieceObj
+    piece: Piece
 }
 
-export default function({piece}: PieceProps) {
+export default function PieceComponent({piece}: PieceProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: piece.id })
 
     const style = transform ? {

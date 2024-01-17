@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
     ]
 }
 
-export default function Index() {
+export default function IndexRoute() {
     return <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.8' }}>
         <Link to="/chessboard">Chessboard</Link>
     </div>
