@@ -64,4 +64,25 @@ describe('Chessboard component', function() {
             expect(squareEl?.querySelector('.m-square__y-notation')).toBeNull()
         })
     })
+
+    // Todo: Seems to be an issue rendering during tests of the react-xarrows library 
+    // with no resolution: https://github.com/Eliav2/react-xarrows/issues/110
+    // describe('showLastMove option', function() {
+    //     const initialMove: Move = { oldSquare: 'e2', newSquare: 'e4', isCapture: false, piece: 'WP' }
+    //
+    //     // test('shows move arrow by default', function() {})
+    //     test('shows move arrow when showLastMove=true', function() {
+    //         act(render(<Chessboard showLastMove={true} initialMove={initialMove} />))
+    //
+    //         let arrowEl = document.querySelector('.m-move-arrow')
+    //         expect(arrowEl).not.toBeNull()
+    //     })
+    //
+    //     test('does not show move arrow when showLastMove=false', function() {
+    //         render(<Chessboard showLastMove={false} />)
+    //
+    //         let arrowEl = document.querySelector('.m-move-arrow')
+    //         expect(arrowEl).toBeNull()
+    //     })
+    // })
 })

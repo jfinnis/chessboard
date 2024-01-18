@@ -1,0 +1,5 @@
+.m-move-arrow {
+    :is(svg, path, g) {
+        pointer-events: none;
+    }
+}

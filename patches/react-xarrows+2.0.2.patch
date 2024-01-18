@@ -1,0 +1,103 @@
+diff --git a/node_modules/react-xarrows/lib/index.js b/node_modules/react-xarrows/lib/index.js
+index 101bd9e..e4a9e84 100644
+--- a/node_modules/react-xarrows/lib/index.js
++++ b/node_modules/react-xarrows/lib/index.js
+@@ -104,6 +104,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", ({ value: true }));
+ var react_1 = __importStar(__webpack_require__(/*! react */ "react"));
++/**
++* To make this package compatible with SSR, layout effect only can run on the client.
++* This suppresses useLayoutEffect warnings on the server.
++* - https://remix.run/docs/en/main/guides/constraints#uselayouteffect
++*/
++const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
++const useLayoutEffect = canUseDOM ? react_1.useLayoutEffect : () => {};
++/* End Patch */
+ var useXarrowProps_1 = __importDefault(__webpack_require__(/*! ./useXarrowProps */ "./src/Xarrow/useXarrowProps.ts"));
+ var Xwrapper_1 = __webpack_require__(/*! ../Xwrapper */ "./src/Xwrapper.tsx");
+ var propTypes_1 = __importDefault(__webpack_require__(/*! ./propTypes */ "./src/Xarrow/propTypes.ts"));
+@@ -174,7 +182,7 @@ var Xarrow = function (props) {
+      * The Main logic of path calculation for the arrow.
+      * calculate new path, adjusting canvas, and set state based on given properties.
+      * */
+-    react_1.useLayoutEffect(function () {
++    useLayoutEffect(function () {
+         if (shouldUpdatePosition.current) {
+             // log('xarrow getPosition');
+             var pos = GetPosition_1.getPosition(xProps, mainRef);
+@@ -215,7 +223,7 @@ var Xarrow = function (props) {
+         animEndValue = 0;
+     }
+     // handle draw animation
+-    react_1.useLayoutEffect(function () {
++    useLayoutEffect(function () {
+         if (lineRef.current)
+             setSt(function (prevSt) { var _a, _b; return (__assign(__assign({}, prevSt), { lineLength: (_b = (_a = lineRef.current) === null || _a === void 0 ? void 0 : _a.getTotalLength()) !== null && _b !== void 0 ? _b : 0 })); });
+     }, [lineRef.current]);
+@@ -484,6 +492,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", ({ value: true }));
+ var react_1 = __importStar(__webpack_require__(/*! react */ "react"));
++/**
++* To make this package compatible with SSR, layout effect only can run on the client.
++* This suppresses useLayoutEffect warnings on the server.
++* - https://remix.run/docs/en/main/guides/constraints#uselayouteffect
++*/
++const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
++const useLayoutEffect = canUseDOM ? react_1.useLayoutEffect : () => {};
++/* End Patch */
+ var utils_1 = __webpack_require__(/*! ./utils */ "./src/Xarrow/utils/index.ts");
+ var lodash_1 = __importDefault(__webpack_require__(/*! lodash */ "lodash"));
+ var constants_1 = __webpack_require__(/*! ../constants */ "./src/constants.tsx");
+@@ -715,7 +731,7 @@ function useDeepCompareMemoize(value) {
+     return ref.current;
+ }
+ function useDeepCompareEffect(callback, dependencies) {
+-    react_1.useLayoutEffect(callback, dependencies.map(useDeepCompareMemoize));
++    useLayoutEffect(callback, dependencies.map(useDeepCompareMemoize));
+ }
+ /**
+  * smart hook that provides parsed props to Xarrow and will trigger rerender whenever given prop is changed.
+@@ -728,7 +744,7 @@ var useXarrowProps = function (userProps, refs) {
+     propsRefs['shouldUpdatePosition'] = shouldUpdatePosition;
+     var curProps = __assign(__assign({}, defaultProps), userProps);
+     var _loop_1 = function (propName) {
+-        react_1.useLayoutEffect(function () {
++        useLayoutEffect(function () {
+             var _a;
+             propsRefs[propName] = (_a = parsePropsFuncs === null || parsePropsFuncs === void 0 ? void 0 : parsePropsFuncs[propName]) === null || _a === void 0 ? void 0 : _a.call(parsePropsFuncs, curProps[propName], propsRefs, shouldUpdatePosition);
+             // console.log('prop update:', propName, 'with value', propsRefs[propName]);
+@@ -761,7 +777,7 @@ var useXarrowProps = function (userProps, refs) {
+         setValVars(__assign({}, valVars));
+         // console.log('end update pos', endPos);
+     }, [endPos]);
+-    react_1.useLayoutEffect(function () {
++    useLayoutEffect(function () {
+         // console.log('svg shape changed!');
+         shouldUpdatePosition.current = true;
+         setValVars(__assign({}, valVars));
+@@ -1394,6 +1410,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
+ 
+ Object.defineProperty(exports, "__esModule", ({ value: true }));
+ var react_1 = __webpack_require__(/*! react */ "react");
++/**
++* To make this package compatible with SSR, layout effect only can run on the client.
++* This suppresses useLayoutEffect warnings on the server.
++* - https://remix.run/docs/en/main/guides/constraints#uselayouteffect
++*/
++const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
++const useLayoutEffect = canUseDOM ? react_1.useLayoutEffect : () => {};
++/* End Patch */
+ var Xwrapper_1 = __webpack_require__(/*! ./Xwrapper */ "./src/Xwrapper.tsx");
+ var useXarrow = function () {
+     var _a = react_1.useState({}), setRender = _a[1];
+@@ -1404,7 +1428,7 @@ var useXarrow = function () {
+     // throw new Error(
+     //   "'Xwrapper' is required around element using 'useXarrow' hook! wrap your xarrows and connected elements with Xwrapper! "
+     // );
+-    react_1.useLayoutEffect(function () {
++    useLayoutEffect(function () {
+         updateXarrow();
+     });
+     return reRender;

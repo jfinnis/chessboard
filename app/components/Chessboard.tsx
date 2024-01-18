@@ -1,44 +1,72 @@
+import { useState } from 'react'
 import { DndContext, type DragEndEvent } from '@dnd-kit/core'
 import { invariant } from '@epic-web/invariant'
 
-import Square from '~/components/Square'
+import MoveArrowComponent from '~/components//MoveArrow'
+import SquareComponent from '~/components/Square'
 import { mapIndicesToNotation, mapNotationToSquareInfo } from '~/utils/notation'
 import { mapIndicesToPositionIndex, movePiece } from '~/utils/positions'
-import type { BoardIndex, Notation, PositionArray } from '~/utils/ts-helpers'
+import type { BoardIndex, Move, Notation, PositionArray } from '~/utils/ts-helpers'
 
+import '~/styles/modules/move-arrow.css'
 import '~/styles/modules/row.css'
 
-export function dropPieceOnSquare(event: DragEndEvent, position: PositionArray): PositionArray {
-    if (event?.over?.id) {
-        const pieceId = event.active.id
-        const piece = position.find(piece => piece?.id === pieceId)
-        invariant(piece, 'Cannot drop an undefined piece.')
+/**
+ * Given a position, return the Move represented by the drag-and-drop or else null.
+ */
+export function generateMoveFromDrop(event: DragEndEvent, position: PositionArray): Move | null {
+    const pieceId = event.active.id
+    const movingPiece = position.find(piece => piece?.id === pieceId)
+    invariant(movingPiece, 'Cannot drop an undefined piece.')
 
-        const dropSquare = event.over.id as Notation
-        const newPosition = movePiece(position, piece.square, dropSquare)
-        return newPosition
+    // Don't move a piece to the same square it is on
+    const dropSquare = event?.over?.id as (Notation | undefined)
+    if (dropSquare && movingPiece.square != dropSquare) {
+        const dropSquareInfo = mapNotationToSquareInfo(dropSquare)
+        const pieceOnNewSquare = position[mapIndicesToPositionIndex(dropSquareInfo.rowIndex, dropSquareInfo.colIndex)]
+        const move: Move = {
+            oldSquare: movingPiece.square,
+            newSquare: dropSquare,
+            piece: movingPiece.piece,
+            isCapture: Boolean(pieceOnNewSquare)
+        }
+        return move
     }
     // If piece wasn't dropped on an appropriate square, just ignore.
-    return position
+    return null
 }
 
 type ChessboardProps = {
     position?: PositionArray
     setPosition?: Function
     showNotation?: boolean
+    showLastMove?: boolean
+    // Initialize chessboard with a "last move" already set.
+    initialMove?: Move
 }
 
 export default function ChessboardComponent({
     position = Array(64).fill(undefined),
     setPosition,
     showNotation = true,
+    showLastMove = true,
+    initialMove
 }: ChessboardProps): JSX.Element {
+    const [lastMove, setLastMove] = useState<Move | undefined>(() => initialMove)
     const boardIndices: BoardIndex[] = [0, 1, 2, 3, 4, 5, 6, 7]
-    return <DndContext
-        onDragEnd={
-            (event: DragEndEvent) => setPosition && setPosition(dropPieceOnSquare(event, position))
-        }
-    >
+
+    function dropChessPiece (event: DragEndEvent): void {
+        if (!setPosition)
+            return
+        const move = generateMoveFromDrop(event, position)
+        if (!move)
+            return
+        const newPosition = movePiece(position, move.oldSquare, move.newSquare)
+        setLastMove(move)
+        setPosition(newPosition)
+    }
+
+    return <DndContext onDragEnd={dropChessPiece}>
         <span className="m-board">
             {boardIndices.map((rowIndex) => {
                 return <div key={`row-${rowIndex}`} className="m-row">
@@ -46,7 +74,7 @@ export default function ChessboardComponent({
                         const notation = mapIndicesToNotation(rowIndex, colIndex)
                         const squareInfo = mapNotationToSquareInfo(notation)
                         const positionIndex = mapIndicesToPositionIndex(rowIndex, colIndex)
-                        return <Square key={notation}
+                        return <SquareComponent key={notation}
                             squareInfo={squareInfo}
                             piece={position[positionIndex]}
                             showNotation={showNotation}
@@ -55,5 +83,11 @@ export default function ChessboardComponent({
                 </div>
             })}
         </span>
+        {showLastMove && lastMove &&
+            <MoveArrowComponent
+                startId={lastMove.oldSquare}
+                endId={lastMove.newSquare}
+            />
+        }
     </DndContext>
 }
