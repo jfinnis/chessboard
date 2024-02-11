@@ -1,14 +1,14 @@
 import { unstable_vitePlugin as remix } from '@remix-run/dev'
+import { remixDevTools } from 'remix-development-tools/vite'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import { remixDevTools } from 'remix-development-tools/vite'
 
 export default defineConfig({
     plugins: [
         remixDevTools(),
         remix({
-            appDirectory: 'src'
+            appDirectory: 'src',
         }),
-        tsconfigPaths()
+        tsconfigPaths(),
     ],
 })

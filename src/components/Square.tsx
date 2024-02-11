@@ -19,18 +19,20 @@ export default function SquareComponent({ squareInfo, piece, showNotation }: Squ
     // const outlineStyle = { outline: isOver ? '2px solid darkgreen' : undefined }
     const colorCss = squareInfo.color === 'white' ? 'm-square--light' : 'm-square--dark'
 
-    return <span
-        id={squareInfo.notation}
-        className={`m-square ${colorCss}`}
-        data-notation={squareInfo.notation}
-        ref={setNodeRef}
-    >
-        {showNotation && squareInfo.rowIndex === 7 &&
-            <span className="m-square__x-notation">{squareInfo.notation.charAt(0)}</span>
-        }
-        {showNotation && squareInfo.colIndex === 0 &&
-            <span className="m-square__y-notation">{squareInfo.notation.charAt(1)}</span>
-        }
-        {piece && <PieceComponent piece={piece} />}
-    </span>
+    return (
+        <span
+            id={squareInfo.notation}
+            className={`m-square ${colorCss}`}
+            data-notation={squareInfo.notation}
+            ref={setNodeRef}
+        >
+            {showNotation && squareInfo.rowIndex === 7 && (
+                <span className="m-square__x-notation">{squareInfo.notation.charAt(0)}</span>
+            )}
+            {showNotation && squareInfo.colIndex === 0 && (
+                <span className="m-square__y-notation">{squareInfo.notation.charAt(1)}</span>
+            )}
+            {piece && <PieceComponent piece={piece} />}
+        </span>
+    )
 }

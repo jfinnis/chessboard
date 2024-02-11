@@ -17,4 +17,3 @@ export function errorMessageExpectation(error: unknown, message: string): void {
         expect('Item thrown was not an instance of Error').toEqual('Threw an error')
     }
 }
-

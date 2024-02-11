@@ -6,13 +6,15 @@ type MoveArrowProps = {
 }
 
 export default function MoveArrowComponent({ startId, endId }: MoveArrowProps) {
-    return <Xarrow
-        divContainerProps={{ className: 'm-move-arrow' }}
-        start={startId}
-        end={endId}
-        startAnchor="middle"
-        endAnchor="middle"
-        path="straight"
-        zIndex={3}
-    />
+    return (
+        <Xarrow
+            divContainerProps={{ className: 'm-move-arrow' }}
+            start={startId}
+            end={endId}
+            startAnchor="middle"
+            endAnchor="middle"
+            path="straight"
+            zIndex={3}
+        />
+    )
 }
