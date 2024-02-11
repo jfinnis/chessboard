@@ -16,7 +16,6 @@ export default function IndexRoute() {
             }}
         >
             <Link to="/chessboard">Chessboard</Link>
-            <Link to="/dialog-example-with-fetcher">Dialog example with fetcher</Link>
         </div>
     )
 }

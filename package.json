@@ -17,14 +17,15 @@
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@epic-web/invariant": "^1.0.0",
+    "html2canvas": "^1.4.1",
     "@remix-run/node": "^2.6.0",
     "@remix-run/react": "^2.6.0",
     "@remix-run/serve": "^2.6.0",
-    "isbot": "^3.6.8",
     "isbot": "^4.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-xarrows": "^2.0.2"
+    "react-xarrows": "^2.0.2",
+    "use-react-screenshot": "^4.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",

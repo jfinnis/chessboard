@@ -1,6 +1,7 @@
 import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { useScreenshot } from 'use-react-screenshot'
 
 import Chessboard from '~/components/Chessboard'
 import { initialPosition, moveRandomPiece, randomPosition } from '~/utils/positions'
@@ -10,9 +11,28 @@ export const meta: MetaFunction = () => {
     return [{ title: 'Chessboard Route' }, { name: 'description', content: 'Chessboard Route' }]
 }
 
+function getScreenshotName() {
+    return `chess-pos-${Date.now()}`
+}
+
 export default function ChessboardRoute() {
     const [showNotation, setShowNotation] = useState(true)
     const [showLastMove, setShowLastMove] = useState(true)
+    const [position, setPosition] = useState<PositionArray | undefined>()
+
+    const chessboardRef = useRef(null)
+    const [image, takeScreenshot] = useScreenshot({
+        type: 'image/jpeg',
+        quality: 1.0
+    })
+
+    function downloadImage(image: string) {
+        const a = document.createElement('a')
+        a.href = image
+        a.download = `${getScreenshotName()}.jpg`
+        a.click()
+    }
+
     return (
         <>
             <Link to="/">Back</Link>
@@ -55,13 +75,27 @@ export default function ChessboardRoute() {
                 >
                     Yolo Move
                 </button>
+
+                <button type="button" onClick={() => takeScreenshot(chessboardRef.current)}>
+                    Preview Screenshot
+                </button>
+
+                <button type="button" onClick={() => takeScreenshot(chessboardRef.current).then(downloadImage)} >
+                    Download Screenshot
+                </button>
             </div>
 
-            <div style={{ margin: '3rem', textAlign: 'center' }}>
-                <Chessboard position={position} hideNotation={hideNotation} />
+        <div ref={chessboardRef}
+            style={{ padding: '3rem', textAlign: 'center', border: '1px solid black', background: 'aliceblue' }}>
+            <Chessboard
+                position={position}
+                updatePosition={(position: PositionArray) => setPosition(position)}
                 showNotation={showNotation}
                 showLastMove={showLastMove}
-            </div>
-        </>
+            />
+        </div>
+
+        {image && <img width={400} src={image} alt={'Screenshot'} />}
+    </>
     )
 }
